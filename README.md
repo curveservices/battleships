@@ -25,7 +25,7 @@
 - isSunk() should be a function that calculates whether a ship is considered sunk based on its length and the number of hits it has received.
 
 2. Create Gameboard class/factory.
-- run tests to see that code is coming together. DO create a UI at first so no DOM methods or console.log
+- run tests to see that code is coming together. DO not create a UI at first so no DOM methods or console.log
 - Gameboard should be able to place ships at specific coordinates by calling the ship factory function.
 - Gameboard should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot.
 - Gameboards should keep track of missed attacks so they can display them properly.
