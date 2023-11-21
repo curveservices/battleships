@@ -1,8 +1,9 @@
 //Create a ship class/factory include length & hits 0
 class Ship {
-    constructor(length) {
+    constructor(name, length) {
+        this.name = name
         this.length = length;
-        this.hits = [];
+        this.hits = 0;
         this.sunk = false;
     }
 
@@ -18,5 +19,4 @@ class Ship {
     }
 }
 
-//export default Ship;
-module.exports = Ship;
+export default Ship;
