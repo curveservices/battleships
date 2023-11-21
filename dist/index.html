@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Js Battleships</title>
   </head>
   <body>
+
     <div id="game-info">
       <p>Turn: <span id="turn-display"></span></p>
       <p>Info: <span id="info"></span></p>
@@ -15,13 +17,15 @@
     <div id="gamesboard-container"></div>
 
     <div class="option-container">
-      <div class="destroyer-preview" draggable="true"></div>
-      <div class="submarine-preview" draggable="true"></div>
-      <div class="cruiser-preview" draggable="true"></div>
-      <div class="battleship-preview" draggable="true"></div>
-      <div class="carrier-preview" draggable="true"></div>
+      <div class="destroyer-preview destroyer" draggable="true"></div>
+      <div class="submarine-preview submarine" draggable="true"></div>
+      <div class="cruiser-preview cruiser" draggable="true"></div>
+      <div class="battleship-preview battleship" draggable="true"></div>
+      <div class="carrier-preview carrier" draggable="true"></div>
     </div>
 
+    <button id="flip-button">FLIP</button>
+    <button id="start-button">START</button>
 
     <script src="main.js"></script>
   </body>
