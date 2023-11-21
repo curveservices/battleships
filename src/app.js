@@ -4,6 +4,9 @@ const app = () => {
     const gamesBoardContainer = document.getElementById('gamesboard-container')
     const optionContainer = document.querySelector('.option-container')
     const flipButton = document.getElementById('flip-button')
+    const startButton = document.getElementById('start-button')
+    const infoDisplay = document.getElementById('info')
+    const turnDisplay = document.getElementById('turn-display')
 
     //Flip ship vert or horiz
     let angle = 0
@@ -147,7 +150,95 @@ const app = () => {
             })
         }
     }
+
+    let gameOver = false
+    let playerTurn
+
+    function startGame() {
+        if (optionContainer.children.length != 0) {
+            infoDisplay.textContent = 'Please place all of your ships!';
+        } else {
+            const allBoardBlocks = document.querySelectorAll('#computer div')
+            allBoardBlocks.forEach(block => block.addEventListener('click', handleClick))
+        }
+    }
+
+    startButton.addEventListener('click', startGame)
+
+    let playerHits = []
+    let computerHits = []
+    const playerSunkShips = []
+    const computerSunkShips = []
     
+
+    function handleClick(e) {
+        if (!gameOver) {
+            if (e.target.classList.contains('taken')) {
+                e.target.classList.add('boom')
+                infoDisplay.textContent = 'You hit the computers ship!'
+                let classes = Array.from(e.target.classList)
+                classes = classes.filter(className => className !== 'block')
+                classes = classes.filter(className => className !== 'boom')
+                classes = classes.filter(className => className !== 'taken')
+                playerHits.push(...classes)
+                checkScore('player', playerHits, playerSunkShips)
+            }
+            if (!e.target.classList.contains('empty')) {
+                infoDisplay.textContent = 'Nothing hit this time'
+                e.target.classList.add('empty')
+            }
+            playerTurn = false
+            const allBoardBlocks = document.querySelectorAll('#computer div')
+            allBoardBlocks.forEach(block => block.replaceWith(block.cloneNode(true)))
+            setTimeout(computerGo, 3000)
+        }
+    }
+
+    //Define the computers go
+    function computerGo() {
+        if (!gameOver) {
+            turnDisplay.textContent = ' Computers Go!'
+            infoDisplay.textContent = 'The computer is thinking...'
+
+            setTimeout(() => {
+                let randomGo = Math.floor(Math.random() * width * width)
+                const allBoardBlocks = document.querySelectorAll('#player div')
+
+                if (allBoardBlocks[randomGo].classList.contains('taken') &&
+                    allBoardBlocks[randomGo].classList.contains('boom')
+                    ) {
+                        computerGo()
+                        return
+                    } else if (
+                        allBoardBlocks[randomGo].classList.contains('taken') &&
+                        !allBoardBlocks[randomGo].classList.contains('boom')
+                        ) {
+                            allBoardBlocks[randomGo].classList.add('boom')
+                            infoDisplay.textContent = 'The computer hit your ship'
+                            let classes = Array.from(e.target.classList)
+                            classes = classes.filter(className => className !== 'block')
+                            classes = classes.filter(className => className !== 'boom')
+                            classes = classes.filter(className => className !== 'taken')
+                            computerHits.push(...classes)
+                        } else {
+                            infoDisplay.textContent= 'Nothing hit this time'
+                            allBoardBlocks[randomGo].classList.add('empty')
+                        }
+            }, 3000)
+
+            setTimeout(() => {
+                playerTurn = true
+                turnDisplay.textContent = 'Your Go!'
+                infoDisplay.textContent = 'Please take your go.'
+                const allBoardBlocks = document.querySelectorAll('#computer div')
+                allBoardBlocks.forEach(block => block.addEventListener('click', handleClick))
+            }, 6000)
+        }
+    }    
+
+    function checkScore() {
+
+    }
 }
 
 export default app
