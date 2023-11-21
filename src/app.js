@@ -5,7 +5,7 @@ const app = () => {
     const optionContainer = document.querySelector('.option-container')
     const flipButton = document.getElementById('flip-button')
 
-    //Flip ship
+    //Flip ship vert or horiz
     let angle = 0
     function flip() {
         const optionShips = Array.from(optionContainer.children)
@@ -46,19 +46,14 @@ const app = () => {
     const carrier = new Ship('carrier', 5)
 
     const ships = [destroyer, submarine, cruiser, battleship, carrier]
+    let notDropped
 
-    function addShipPiece(ship) {
-        const allBoardBlocks = document.querySelectorAll('#computer div');
-        let randomBoolean = Math.random() < 0.5;
-        let isHorizontal = randomBoolean;
-        let randomStartIndex = Math.floor(Math.random() * width * width);
-        console.log(randomStartIndex);
-
-        let validStart = isHorizontal ? randomStartIndex <= width * width - ship.length ? randomStartIndex :
+    function getValidity(allBoardBlocks, isHorizontal, startIndex, ship) {
+        let validStart = isHorizontal ? startIndex <= width * width - ship.length ? startIndex :
             width * width - ship.length :
             //Handle vertical
-            randomStartIndex <= width * width - width * ship.length ? randomStartIndex : 
-                randomStartIndex - ship.length * width + width
+            startIndex <= width * width - width * ship.length ? startIndex : 
+                startIndex - ship.length * width + width
 
         let shipBlocks = [];
 
@@ -81,18 +76,78 @@ const app = () => {
 
         const notTaken = shipBlocks.every(shipBlock => !shipBlock.classList.contains('taken'))
 
+        return { shipBlocks, valid, notTaken}
+    }
+
+    function addShipPiece(user, ship, startId) {
+        const allBoardBlocks = document.querySelectorAll(`#${user} div`)
+        let randomBoolean = Math.random() < 0.5
+        let isHorizontal = user === 'player' ? angle === 0 : randomBoolean
+        let randomStartIndex = Math.floor(Math.random() * width * width)
+
+        let startIndex = startId ? startId : randomStartIndex
+
+        const { shipBlocks, valid, notTaken } = getValidity(allBoardBlocks, isHorizontal, startIndex, ship)
+
         if (valid && notTaken) {
             shipBlocks.forEach(shipBlock => {
                 shipBlock.classList.add(ship.name)
                 shipBlock.classList.add('taken')
             })
         } else {
-            addShipPiece(ship)
+            if (user === 'computer') addShipPiece(user, ship, startId)
+            if (user === 'player') notDropped = true
         };
     };
 
-    ships.forEach(ship => addShipPiece(ship))
+    ships.forEach(ship => addShipPiece('computer', ship))
 
+    //Drag player ships
+    let draggedShip
+    const optionShips = Array.from(optionContainer.children)
+    optionShips.forEach(optionShip => optionShip.addEventListener('dragstart', dragStart))
+
+    const allPlayerBlocks = document.querySelectorAll('#player div')
+    allPlayerBlocks.forEach(playerBlock => {
+        playerBlock.addEventListener('dragover', dragOver)
+        playerBlock.addEventListener('drop', dropShip)
+    })
+
+    function dragStart(e) {
+        notDropped = false
+        draggedShip = e.target
+    }
+
+    function dragOver(e) {
+        e.preventDefault()
+        const ship = ships[draggedShip.id]
+        highLightArea(e.target.id, ship)
+    }
+
+    function dropShip(e) {
+        const startId = e.target.id
+        const ship = ships[draggedShip.id]
+        addShipPiece('player', ship, startId)
+        if (!notDropped) {
+            draggedShip.remove()
+        }
+    }
+
+    //Add highliht
+    function highLightArea(startIndex, ship) {
+        const allBoardBlocks = document.querySelectorAll('#player div')
+        let isHorizontal = angle === 0
+
+        const { shipBlocks, valid, notTaken} = getValidity(allBoardBlocks, isHorizontal, startIndex, ship)
+
+        if (valid && notTaken) {
+            shipBlocks.forEach(shipBlock => {
+                shipBlock.classList.add('hover')
+                setTimeout(() => shipBlock.classList.remove('hover'), 500)
+            })
+        }
+    }
+    
 }
 
 export default app
