@@ -12,7 +12,7 @@ test('Gameboard can receive an attack and hit ship', () => {
     const gameboard = new Gameboard();
     const ship = new Ship(3);
     gameboard.placeShip(ship, 1, 2, true);
-    gameboard.recieveAttack(1, 2, true);
+    gameboard.receiveAttack(1, 2, true);
     expect(ship.hits).toBe(1);
 });
 
