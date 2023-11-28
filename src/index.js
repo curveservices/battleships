@@ -1,6 +1,3 @@
-import app from './app'
+import gameLoop from "./game-loop";
 
-app();
-
-
-console.log('Hello world')
+gameLoop();

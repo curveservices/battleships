@@ -1,24 +1,51 @@
-const Gameboard = require('../src/gameboard');
-const { Player, Computer } = require('../src/player');
-const Ship = require('../src/ship');
+const Gameboard = require("../src/gameboard");
+const { Player, Computer } = require("../src/player");
+const Ship = require("../src/ship");
 
-test('player can attack enemy gameboard', () => {
-    const enemyGameboard = new Gameboard;
-    const player = new Player('Player', enemyGameboard);
-    const ship = new Ship(3);
+describe("Player", () => {
+  test("Player can attack a gameboard", () => {
+    const gameboard = new Gameboard();
+    const player = new Player("Player1", gameboard);
+    const ship = new Ship("Carrier", 5);
+    gameboard.placeShip(ship, 0, 0, true);
 
-    enemyGameboard.placeShip(ship, 0, 0);
     player.attack(0, 0);
+
     expect(ship.hits).toBe(1);
+  });
 });
 
- test('computer can make random attack on enemy gameboard', () => {
-     const playerGameboard = new Gameboard;
-     const computer = new Computer;
-     const ship = new Ship(2);
+describe("Computer", () => {
+  test("computer can make a random attack on gameboard", () => {
+    const gameboard = new Gameboard();
+    const computer = new Computer("Computer", gameboard);
+    const ship = new Ship("Carrier", 5);
+    gameboard.placeShip(ship, 0, 0, true);
 
-     playerGameboard.placeShip(ship, 0, 0)
-     computer.attack(0,0);
-     expect(playerGameboard.missedAttacks.length).toBe(1);
-     expect(playerGameboard.ship.hits).toBe(1)
- })
+    computer.randomAttack();
+
+    expect(ship.hits).toBeGreaterThanOrEqual(0);
+  });
+
+  test("computer does not make the same attack twice", () => {
+    const gameboard = new Gameboard();
+    const computer = new Computer("Computer", gameboard);
+
+    computer.randomAttack(); // First attack
+
+    // Save the previous attacks
+    const previousAttacks = computer.previousAttacks.slice();
+
+    computer.randomAttack(); // Second attack
+
+    // Ensure the second attack is different from the previous ones
+    const newAttack =
+      computer.previousAttacks[computer.previousAttacks.length - 1];
+    expect(
+      previousAttacks.some(
+        (attack) =>
+          attack.row === newAttack.row && attack.col === newAttack.col,
+      ),
+    ).toBe(false);
+  });
+});

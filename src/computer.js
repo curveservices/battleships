@@ -1,8 +1,8 @@
-import Player from "./player"
+import Player from "./player";
 
 class Computer extends Player {
-    constructor() {
-        super()
-    }
+  constructor() {
+    super();
+  }
 }
 export default Computer;
