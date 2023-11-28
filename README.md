@@ -68,6 +68,7 @@
     <img width="100" alt="Webpack"src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg" /></a>
 <a href="https://jestjs.io/">
     <img width="100" alt="jest" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" /></a>
-**_<a href="https://twitter.com/Crypto_Rozla"> Rozla-Dev </a> 00-00-2023_**
+
+**_<a href="https://twitter.com/Crypto_Rozla"> Rozla-Dev </a> 28-11-2023_**
 
 [Back to top 👆](#project-battleship)
