@@ -1,10 +1,10 @@
-# 🚫 UNDER CONSTRUCTION 🚫
-
 # Project: Battleship
 
-## Live Demo 👉
+## Live Demo 👉 [Battleships](curveservices.github.io/battleships)
 
 ## PC View 👇
+
+<img width="741" alt="Screenshot 2023-11-28 at 16 05 59" src="https://github.com/curveservices/battleships/assets/101556296/bfe68ecc-996c-4bda-ae7f-22ff3f4deacd">
 
 ## Overview
 
