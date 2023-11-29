@@ -1,6 +1,6 @@
 # Project: Battleship
 
-## Live Demo 👉 [Battleships](curveservices.github.io/battleships)
+## Live Demo 👉 [Battleships](https://curveservices.github.io/battleships/)
 
 ## PC View 👇
 

@@ -7,7 +7,9 @@
     "test": "jest",
     "build": "webpack",
     "watch": "webpack --watch",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier . --write",
+    "pages": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
