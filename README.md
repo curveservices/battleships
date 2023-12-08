@@ -4,7 +4,7 @@
 
 ## PC View 👇
 
-<img width="741" alt="Screenshot 2023-11-28 at 16 05 59" src="https://github.com/curveservices/battleships/assets/101556296/bfe68ecc-996c-4bda-ae7f-22ff3f4deacd">
+<img width="1000" alt="Screenshot 2023-12-08 at 12 52 24" src="https://github.com/curveservices/battleships/assets/101556296/0355a9eb-bf98-4bc1-a4e3-aa9287b05b32">
 
 ## Overview
 
